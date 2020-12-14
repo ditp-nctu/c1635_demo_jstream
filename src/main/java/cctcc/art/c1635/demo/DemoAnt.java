@@ -22,10 +22,23 @@ import processing.core.PVector;
  *
  * @author Jonathan Chang, Chun-yien <ccy@musicapoetica.org>
  */
-public record DemoAnt(PVector p) {
+public class DemoAnt {
+
+   public PVector p;
+
+   public DemoAnt(PVector p) {
+
+      this.p = p;
+   }
+
+   public PVector p() {
+
+      return p;
+   }
 
    public void move() {
-      var r = new Random();
+
+      Random r = new Random();
       p.set(p.x + r.nextInt(3) - 1, p.y + r.nextInt(3) - 1);
    }
 }
