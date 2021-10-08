@@ -15,11 +15,11 @@
  */
 package cctcc.art.c1635.demo;
 
-import java.awt.Rectangle;
 import java.util.List;
-import static java.util.function.Predicate.not;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import static java.util.function.Predicate.not;
+import java.awt.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
 
