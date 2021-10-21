@@ -15,6 +15,7 @@
  */
 package cctcc.art.c1635.demo;
 
+import java.awt.Point;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,51 +30,51 @@ import processing.core.PVector;
  */
 public class Main extends PApplet {
 
-   int size = 700;
-   int margin = 50;
-   Rectangle inner_rect, outer_rect;
-   List<DemoAnt> ants;
+  int size = 700;
+  int margin = 50;
+  Rectangle inner_rect, outer_rect;
+  List<DemoAnt> ants;
 
-   @Override
-   public void settings() {
+  @Override
+  public void settings() {
 
-      size(size, size);
-   }
+    size(size, size);
+  }
 
-   @Override
-   public void setup() {
+  @Override
+  public void setup() {
 
-      this.outer_rect = new Rectangle(margin, margin, size - margin * 2, size - margin * 2);
-      this.inner_rect = new Rectangle(margin * 2, margin * 2, size - margin * 4, size - margin * 4);
-      this.ants = Stream.generate(() -> new PVector(random(size), random(size)))
-              .filter(not(this::inSquare))
-              .limit(1500)
-              .map(DemoAnt::new)
-              .collect(Collectors.toList());
-      noFill();
-   }
+    colorMode(RGB);
+    this.outer_rect = new Rectangle(margin, margin, size - margin * 2, size - margin * 2);
+    this.inner_rect = new Rectangle(margin * 2, margin * 2, size - margin * 4, size - margin * 4);
+    this.ants = Stream.generate(() -> new DemoAnt(size))
+            .filter(not(this::inSquare))
+            .limit(50000)
+            .collect(Collectors.toList());
+    noFill();
+  }
 
-   @Override
-   public void draw() {
+  @Override
+  public void draw() {
 
-      background(0);
-      stroke(50);
-      rect(outer_rect.x, outer_rect.y, outer_rect.width, outer_rect.height);
-      rect(inner_rect.x, inner_rect.y, inner_rect.width, inner_rect.height);
-      stroke(255);
-      ants.stream()
-              .peek(ant -> point(ant.p().x, ant.p().y))
-              .forEach(DemoAnt::move);
-   }
+    background(0);
+    stroke(50);
+    rect(outer_rect.x, outer_rect.y, outer_rect.width, outer_rect.height);
+    rect(inner_rect.x, inner_rect.y, inner_rect.width, inner_rect.height);
+    ants.stream()
+            .peek(ant -> stroke(ant.color().getRGB()))
+            .peek(ant -> point(ant.p().x, ant.p().y))
+            .forEach(DemoAnt::move);
+  }
 
-   public boolean inSquare(PVector v) {
+  public boolean inSquare(DemoAnt ant) {
 
-      return inner_rect.contains(v.x, v.y) || !outer_rect.contains(v.x, v.y);
-   }
+    return inner_rect.contains(ant.p()) || !outer_rect.contains(ant.p());
+  }
 
-   public static void main(String[] args) {
+  public static void main(String[] args) {
 
-      System.setProperty("sun.java2d.uiScale", "1.0");
-      PApplet.main(Main.class.getName());
-   }
+    System.setProperty("sun.java2d.uiScale", "1.0");
+    PApplet.main(Main.class.getName());
+  }
 }

@@ -15,17 +15,26 @@
  */
 package cctcc.art.c1635.demo;
 
+import java.awt.Color;
+import java.awt.Point;
 import java.util.Random;
-import processing.core.PVector;
 
 /**
  *
  * @author Jonathan Chang, Chun-yien <ccy@musicapoetica.org>
  */
-public record DemoAnt(PVector p) {
+public record DemoAnt(Point p, Color color) {
 
-   public void move() {
-      var r = new Random();
-      p.set(p.x + r.nextInt(3) - 1, p.y + r.nextInt(3) - 1);
-   }
+  static final Random R = new Random();
+
+  public DemoAnt(int size) {
+
+    this(new Point(R.nextInt(size), R.nextInt(size)), new Color(R.nextInt()));
+  }
+
+  public void move() {
+
+    p.x += R.nextInt(3) - 1;
+    p.y += R.nextInt(3) - 1;
+  }
 }
