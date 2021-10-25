@@ -15,14 +15,12 @@
  */
 package cctcc.art.c1635.demo;
 
-import java.awt.Point;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import static java.util.function.Predicate.not;
 import java.awt.Rectangle;
 import processing.core.PApplet;
-import processing.core.PVector;
 
 /**
  *
@@ -34,6 +32,7 @@ public class Main extends PApplet {
   int margin = 50;
   Rectangle inner_rect, outer_rect;
   List<DemoAnt> ants;
+  boolean status;
 
   @Override
   public void settings() {
@@ -58,18 +57,25 @@ public class Main extends PApplet {
   public void draw() {
 
     background(0);
+    if (status == false) return;
     stroke(50);
     rect(outer_rect.x, outer_rect.y, outer_rect.width, outer_rect.height);
     rect(inner_rect.x, inner_rect.y, inner_rect.width, inner_rect.height);
     ants.stream()
-            .peek(ant -> stroke(ant.color().getRGB()))
-            .peek(ant -> point(ant.p().x, ant.p().y))
+            .peek(ant -> stroke(ant.color.getRGB()))
+            .peek(ant -> point(ant.p.x, ant.p.y))
             .forEach(DemoAnt::move);
   }
 
   public boolean inSquare(DemoAnt ant) {
 
-    return inner_rect.contains(ant.p()) || !outer_rect.contains(ant.p());
+    return inner_rect.contains(ant.p) || !outer_rect.contains(ant.p);
+  }
+
+  @Override
+  public void keyPressed() {
+
+    if (keyCode == ENTER) status = true;
   }
 
   public static void main(String[] args) {

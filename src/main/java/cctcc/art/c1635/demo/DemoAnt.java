@@ -23,13 +23,17 @@ import java.util.Random;
  *
  * @author Jonathan Chang, Chun-yien <ccy@musicapoetica.org>
  */
-public record DemoAnt(Point p, Color color) {
+public class DemoAnt {
+
+  Point p;
+  Color color;
 
   static final Random R = new Random();
 
   public DemoAnt(int size) {
 
-    this(new Point(R.nextInt(size), R.nextInt(size)), new Color(R.nextInt()));
+    this.p = new Point(R.nextInt(size), R.nextInt(size));
+    this.color = new Color(R.nextInt());
   }
 
   public void move() {
